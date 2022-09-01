@@ -3,7 +3,7 @@ from os import getenv
 
 setup(
     name="resistors",
-    version="1.0.0",
+    version="1.0.1",
     author="Aarav Borthakur",
     author_email="gadhaguy13@gmail.com",
     description="Decode resistor color codes and encode resistance values",
@@ -16,6 +16,5 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    python_requires=">=3.6",
-    install_requires=["requests"]
+    python_requires=">=3.6"
 )
