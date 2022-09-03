@@ -88,16 +88,20 @@ class Resistor():
         tolerance (float):  The tolerance in percent
         bands (int):        Number of bands on the resistor; can be only 4 or 5
         """
-        colors = []
         base = util.get_sig_figs(value)
+        if (base > 999) or (bands == 4 and base > 99):
+            raise errors.TooManySigFigsError(bands, value)
+        if not (bands == 4 or bands == 5):
+            raise errors.errorsBandsOutOfBoundsError(bands)
+        colors = []
         multiplier = round(value / base, 4)
         baseDigits = util.get_digits(base)
+        if (bands == 4 and len(baseDigits) < 2) or (bands == 5 and len(baseDigits) < 3):
+            for i in range(bands - len(baseDigits) - 2):
+                colors.append("black")
         for i in baseDigits:
             colors.append(Resistor.sig_figs[i])
-        if (bands == 4 and len(colors) > 2) or not (bands == 4 or bands == 5):
-            raise errors.BandsOutOfBoundsError(bands, value)
-        if len(colors) <= 2 and bands == 5:
-            colors = ["black"] + colors
+
         colors.append(util.reverse_dict(Resistor.multiplier)[multiplier])
         colors.append(util.reverse_dict(Resistor.tolerance)[tolerance])
         return cls(*colors)
