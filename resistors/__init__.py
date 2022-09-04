@@ -1,3 +1,14 @@
+"""
+Resistors
+---------
+A Python library for decoding resistor color codes and encoding resistance values.
+
+The library strictly follows the following chart:
+https://github.com/gadhagod/resistors/raw/master/docs/chart.jpg
+
+Using colors not listed in this chart will result in a `KeyError` or `ValueError`.
+"""
+
 from . import util
 from . import errors
 
@@ -68,14 +79,17 @@ class Resistor():
         Returns:
         {"value": float, "tolerance": float}
         """
-        if(self.isFiveBand):
-            value = (Resistor.sig_figs.index(self.first_color) * 100 + Resistor.sig_figs.index(self.second_color) * 10 + Resistor.sig_figs.index(self.third_color)) * Resistor.multiplier[self.fourth_color]
-            tolerance = dict(Resistor.tolerance)[self.fifth_color]
-        else:
-            value = (Resistor.sig_figs.index(self.first_color) * 10 + Resistor.sig_figs.index(self.second_color)) * Resistor.multiplier[self.third_color]
-            tolerance = dict(Resistor.tolerance)[self.fourth_color]
+        try:
+            if (self.isFiveBand):
+                value = (Resistor.sig_figs.index(self.first_color) * 100 + Resistor.sig_figs.index(self.second_color) * 10 + Resistor.sig_figs.index(self.third_color)) * Resistor.multiplier[self.fourth_color]
+                tolerance = dict(Resistor.tolerance)[self.fifth_color]
+            else:
+                value = (Resistor.sig_figs.index(self.first_color) * 10 + Resistor.sig_figs.index(self.second_color)) * Resistor.multiplier[self.third_color]
+                tolerance = dict(Resistor.tolerance)[self.fourth_color]
 
-        return {"value": float(round(value, 4)), "tolerance": tolerance}
+            return {"value": float(round(value, 4)), "tolerance": tolerance}
+        except (ValueError, KeyError):
+            raise errors.ColorNotRecognizedError(colors)
 
 
     @classmethod

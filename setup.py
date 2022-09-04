@@ -1,9 +1,8 @@
 from setuptools import setup, find_packages
-from os import getenv
 
 setup(
     name="resistors",
-    version="1.0.2",
+    version="1.0.3",
     author="Aarav Borthakur",
     author_email="gadhaguy13@gmail.com",
     description="Decode resistor color codes and encode resistance values",

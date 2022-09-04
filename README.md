@@ -9,8 +9,6 @@ A Python library for decoding resistor color codes and encoding resistance value
 The library *strictly* follows the following chart:
 ![](https://github.com/gadhagod/resistors/raw/master/docs/chart.jpg)
 
-Any colors used in a program not included in this chart will result in a `KeyError`.
-
 ## Installation
 
     pip3 install resistors
