@@ -109,12 +109,19 @@ class Resistor():
             raise errors.errorsBandsOutOfBoundsError(bands)
         colors = []
         multiplier = round(value / base, 4)
+        tailingBlacks = 0
         baseDigits = util.get_digits(base)
+        
         if (bands == 4 and len(baseDigits) < 2) or (bands == 5 and len(baseDigits) < 3):
             for i in range(bands - len(baseDigits) - 2):
-                colors.append("black")
+                multiplier /= 10    # shift multiplier down
+                tailingBlacks += 1  # later add blacks at the end
+                
         for i in baseDigits:
             colors.append(Resistor.sig_figs[i])
+        
+        for i in range(tailingBlacks):
+            colors.append("black")
 
         colors.append(util.reverse_dict(Resistor.multiplier)[multiplier])
         colors.append(util.reverse_dict(Resistor.tolerance)[tolerance])
