@@ -108,7 +108,7 @@ class Resistor():
         if not (bands == 4 or bands == 5):
             raise errors.errorsBandsOutOfBoundsError(bands)
         colors = []
-        multiplier = round(value / base, 4)
+        multiplier = round(value / base, 4) if value > 0 else 0
         tailingBlacks = 0
         baseDigits = util.get_digits(base)
         

@@ -1,4 +1,6 @@
 def get_sig_figs(value):
+    if value == 0:
+        return 0
     str_value = str(value).replace(".", "")
     while str_value[0] == "0":
         str_value = str_value[1:]
